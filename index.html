@@ -5,75 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบรายงานผลการปฏิบัติงาน รปภ.</title>
     <!-- นำเข้าฟอนต์สารบรรณ (Sarabun) -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- นำเข้าไลบรารี SheetJS สำหรับ Export Excel -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
+        :root {
+            --primary-navy: #1E3A8A; /* สีกรมท่า */
+            --accent-gold: #D4AF37;  /* สีทอง */
+            --bg-color: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #334155;
+            --border-light: #E2E8F0;
+        }
         body {
             font-family: 'Sarabun', sans-serif;
-            background-color: #FAFAFA;
-            color: #333333;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #FFFFFF;
-            padding: 30px;
-            border: 1px solid #E0E0E0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 8px 8px 24px rgba(0,0,0,0.04), -8px -8px 24px rgba(255,255,255,1);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .header-title {
+            text-align: center;
+            margin-bottom: 30px;
         }
         h2 {
-            text-align: center;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            color: var(--primary-navy);
+            display: inline-block;
+            border-bottom: 3px solid var(--accent-gold);
+            padding-bottom: 8px;
+            margin: 0;
+            font-weight: 700;
         }
         
         /* 🎨 ส่วนของการค้นหาวันที่ */
         .filter-section {
-            background-color: #F5F5F5;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background-color: #F8FAFC;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
             display: flex;
             gap: 15px;
             align-items: center;
             flex-wrap: wrap;
-            border: 1px solid #E0E0E0;
+            border: 1px solid var(--border-light);
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.02);
         }
         .filter-section label {
             font-weight: 600;
+            color: var(--primary-navy);
         }
         .date-input {
-            padding: 8px;
-            border: 1px solid #CCC;
-            border-radius: 4px;
+            padding: 10px 15px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
             font-family: 'Sarabun', sans-serif;
             font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .date-input:focus {
+            border-color: var(--accent-gold);
+        }
+        .btn-search, .btn-reset, .btn-export {
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
         }
         .btn-search {
-            background-color: #1976d2; /* สีน้ำเงิน */
-            color: #FFF;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 15px;
+            background-color: var(--primary-navy);
+            color: var(--accent-gold);
+        }
+        .btn-search:hover {
+            background-color: #152C69;
+            transform: translateY(-1px);
         }
         .btn-reset {
-            background-color: #757575; /* สีเทา */
+            background-color: #94A3B8;
             color: #FFF;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 15px;
         }
-        .btn-search:hover, .btn-reset:hover { opacity: 0.9; }
+        .btn-reset:hover { background-color: #64748B; }
 
         .header-action {
             display: flex;
@@ -81,59 +106,99 @@
             align-items: center;
             margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
         }
-        .tabs { display: flex; gap: 10px; }
+        .tabs { display: flex; gap: 8px; }
         .tab-btn {
-            background-color: #E0E0E0; color: #333; border: none;
-            padding: 10px 20px; cursor: pointer;
-            font-family: 'Sarabun', sans-serif; font-size: 16px;
-            font-weight: 600; border-radius: 4px 4px 0 0;
+            background-color: #E2E8F0; 
+            color: #64748B; 
+            border: none;
+            padding: 12px 24px; 
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif; 
+            font-size: 16px;
+            font-weight: 600; 
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
         }
-        .tab-btn.active { background-color: #333; color: #FFF; }
+        .tab-btn:hover { background-color: #CBD5E1; }
+        .tab-btn.active { 
+            background-color: var(--primary-navy); 
+            color: var(--accent-gold); 
+            box-shadow: inset 0 -3px 0 var(--accent-gold);
+        }
         
         .export-buttons { display: flex; gap: 10px; }
-        .btn-export {
-            background-color: #2e7d32; color: #FFF; border: none;
-            padding: 8px 15px; cursor: pointer; border-radius: 4px;
-            font-family: 'Sarabun', sans-serif; font-size: 15px;
-        }
-        .btn-export.pdf { background-color: #c62828; }
-        .btn-export:hover { opacity: 0.9; }
+        .btn-export.excel { background-color: #10B981; color: #FFF; }
+        .btn-export.excel:hover { background-color: #059669; }
+        .btn-export.pdf { background-color: #EF4444; color: #FFF; }
+        .btn-export.pdf:hover { background-color: #DC2626; }
         
-        .tab-content { display: none; }
+        .tab-content { display: none; animation: fadeIn 0.4s; }
         .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td {
-            border: 1px solid #BDBDBD; padding: 12px;
-            text-align: left; font-size: 16px; vertical-align: middle;
+        table { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0;
+            margin-top: 10px; 
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
         }
-        th { background-color: #EEEEEE; font-weight: 600; text-align: center; }
+        th, td {
+            padding: 14px;
+            text-align: left; 
+            font-size: 16px; 
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border-light);
+            border-right: 1px solid var(--border-light);
+        }
+        th:last-child, td:last-child { border-right: none; }
+        tr:last-child td { border-bottom: none; }
+        
+        th { 
+            background-color: var(--primary-navy); 
+            color: #FFFFFF;
+            font-weight: 600; 
+            text-align: center; 
+        }
+        tr:hover td { background-color: #F8FAFC; }
         
         .thumb-img {
-            width: 60px; height: 60px; object-fit: cover;
-            border: 1px solid #BDBDBD; border-radius: 4px;
-            cursor: pointer; margin-right: 4px;
+            width: 65px; height: 65px; object-fit: cover;
+            border: 2px solid var(--border-light); 
+            border-radius: 6px;
+            cursor: pointer; margin-right: 5px;
+            transition: transform 0.2s;
         }
+        .thumb-img:hover { transform: scale(1.05); border-color: var(--accent-gold); }
         
         #imageModal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 1000; text-align: center; overflow-y: auto;
+            background: rgba(15, 23, 42, 0.9); z-index: 1000; text-align: center; overflow-y: auto;
+            backdrop-filter: blur(4px);
         }
         .modal-content {
-            margin: 50px auto; background: #FFF; padding: 20px;
-            width: 80%; max-width: 800px; border-radius: 5px;
+            margin: 5% auto; background: var(--card-bg); padding: 25px;
+            width: 90%; max-width: 800px; border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
-        .close-btn { float: right; cursor: pointer; font-size: 28px; font-weight: bold; color: #333; }
-        .modal-img { max-width: 100%; height: auto; border: 1px solid #CCC; margin-top: 10px; }
+        .close-btn { 
+            float: right; cursor: pointer; font-size: 32px; 
+            font-weight: bold; color: var(--text-main); 
+            line-height: 1; transition: color 0.2s;
+        }
+        .close-btn:hover { color: #EF4444; }
+        .modal-img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 15px; }
 
         /* 🖨️ ตั้งค่าสำหรับการพิมพ์ออก PDF */
         @media print {
             body { background-color: #FFF; padding: 0; }
             .container { border: none; box-shadow: none; padding: 0; width: 100%; max-width: none; }
-            /* ซ่อนเมนูค้นหาและปุ่มต่างๆ ตอนปริ้น */
-            .filter-section, .tabs, .export-buttons, .btn-view { display: none !important; }
+            .filter-section, .tabs, .export-buttons { display: none !important; }
+            th { background-color: #EEEEEE !important; color: #333 !important; }
             .thumb-img {
                 width: 50px !important; height: 50px !important;
                 border: 1px solid #000 !important;
@@ -147,7 +212,9 @@
 <body>
 
 <div class="container">
-    <h2>ระบบรายงานผลการปฏิบัติงาน รปภ.</h2>
+    <div class="header-title">
+        <h2>ระบบรายงานผลการปฏิบัติงาน รปภ.</h2>
+    </div>
     
     <!-- 📅 ส่วนค้นหาตามช่วงวันที่ -->
     <div class="filter-section">
@@ -155,8 +222,8 @@
         <input type="date" id="startDate" class="date-input">
         <label>ถึงวันที่:</label>
         <input type="date" id="endDate" class="date-input">
-        <button class="btn-search" onclick="applyFilter()">🔍 ค้นหา</button>
-        <button class="btn-reset" onclick="resetFilter()">🔄 ล้างค่า (ดูทั้งหมด)</button>
+        <button class="btn-search" onclick="applyFilter()">🔍 ค้นหาข้อมูล</button>
+        <button class="btn-reset" onclick="resetFilter()">🔄 ดูทั้งหมด</button>
     </div>
 
     <!-- แถบเมนูและปุ่ม Export -->
@@ -166,14 +233,13 @@
             <button class="tab-btn" onclick="switchTab('patrol', event)">2. รายงานเหตุการณ์</button>
         </div>
         <div class="export-buttons">
-            <button class="btn-export" onclick="exportToExcel()">📊 ดาวน์โหลด Excel</button>
+            <button class="btn-export excel" onclick="exportToExcel()">📊 ดาวน์โหลด Excel</button>
             <button class="btn-export pdf" onclick="exportToPDF()">🖨️ พิมพ์ / บันทึก PDF</button>
         </div>
     </div>
 
     <!-- แท็บที่ 1: รายงานเข้าเวร -->
     <div id="shiftTab" class="tab-content active">
-        <h3>รายการรายงานเข้าเวรประจำวัน</h3>
         <table id="shiftTable">
             <thead>
                 <tr>
@@ -185,14 +251,13 @@
                 </tr>
             </thead>
             <tbody id="shiftTableBody">
-                <tr><td colspan="5" style="text-align:center;">กำลังโหลดข้อมูล...</td></tr>
+                <tr><td colspan="5" style="text-align:center; padding: 30px;">กำลังโหลดข้อมูล...</td></tr>
             </tbody>
         </table>
     </div>
 
     <!-- แท็บที่ 2: รายงานเหตุการณ์ -->
     <div id="patrolTab" class="tab-content">
-        <h3>รายการรายงานเหตุการณ์ประจำวัน</h3>
         <table id="patrolTable">
             <thead>
                 <tr>
@@ -203,7 +268,7 @@
                 </tr>
             </thead>
             <tbody id="patrolTableBody">
-                <tr><td colspan="4" style="text-align:center;">กำลังโหลดข้อมูล...</td></tr>
+                <tr><td colspan="4" style="text-align:center; padding: 30px;">กำลังโหลดข้อมูล...</td></tr>
             </tbody>
         </table>
     </div>
@@ -213,7 +278,7 @@
 <div id="imageModal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h3>รูปภาพขนาดเต็ม</h3>
+        <h3 style="color: var(--primary-navy); margin-top: 0;">รูปภาพหลักฐานการปฏิบัติงาน</h3>
         <img id="modalImage" class="modal-img" src="" alt="Full size">
     </div>
 </div>
@@ -286,7 +351,6 @@
     async function fetchImagesHtml(collectionName, docId) {
         try {
             const imagesRef = collection(db, collectionName, docId, "images");
-            // 💡 เรียงรูปภาพให้เป็นไปตามลำดับเวลาที่ รปภ. กดส่งเข้ามารูปแรกไปรูปสุดท้าย
             const qImages = query(imagesRef, orderBy("timestamp", "asc"));
             const imageSnapshot = await getDocs(qImages);
             if (imageSnapshot.empty) return '-';
@@ -311,10 +375,9 @@
                     collection(db, "shift_reports"),
                     where("timestamp", ">=", filterStartDate),
                     where("timestamp", "<=", filterEndDate),
-                    orderBy("timestamp", "asc") // 💡 เปลี่ยนเป็น "asc" เรียงจากเก่าไปใหม่
+                    orderBy("timestamp", "asc")
                 );
             } else {
-                // 💡 เปลี่ยนเป็น "asc" เรียงจากเก่าไปใหม่
                 q = query(collection(db, "shift_reports"), orderBy("timestamp", "asc"));
             }
 
@@ -322,7 +385,7 @@
             tableBody.innerHTML = '';
 
             if (querySnapshot.empty) {
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 20px;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>';
                 return;
             }
 
@@ -343,7 +406,7 @@
                 tableBody.appendChild(tr);
             }
         } catch (error) {
-            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:red;">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:red; padding: 20px;">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>';
             console.error("Error loading shift data:", error);
         }
     }
@@ -357,10 +420,9 @@
                     collection(db, "patrol_reports"),
                     where("timestamp", ">=", filterStartDate),
                     where("timestamp", "<=", filterEndDate),
-                    orderBy("timestamp", "asc") // 💡 เปลี่ยนเป็น "asc" เรียงจากเก่าไปใหม่
+                    orderBy("timestamp", "asc")
                 );
             } else {
-                // 💡 เปลี่ยนเป็น "asc" เรียงจากเก่าไปใหม่
                 q = query(collection(db, "patrol_reports"), orderBy("timestamp", "asc"));
             }
 
@@ -368,7 +430,7 @@
             tableBody.innerHTML = '';
 
             if (querySnapshot.empty) {
-                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>';
                 return;
             }
 
@@ -386,7 +448,7 @@
                 tableBody.appendChild(tr);
             }
         } catch (error) {
-            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:red;">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:red; padding: 20px;">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>';
             console.error("Error loading patrol data:", error);
         }
     }
