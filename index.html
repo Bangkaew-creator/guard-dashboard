@@ -30,39 +30,31 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-        .header-action {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        
+        /* 🎨 ส่วนของการค้นหาวันที่ */
+        .filter-section {
+            background-color: #F5F5F5;
+            padding: 15px;
+            border-radius: 5px;
             margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            border: 1px solid #E0E0E0;
         }
-        .tabs {
-            display: flex;
-            gap: 10px;
-        }
-        .tab-btn {
-            background-color: #E0E0E0;
-            color: #333;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 16px;
+        .filter-section label {
             font-weight: 600;
-            border-radius: 4px 4px 0 0;
         }
-        .tab-btn.active {
-            background-color: #333;
-            color: #FFF;
+        .date-input {
+            padding: 8px;
+            border: 1px solid #CCC;
+            border-radius: 4px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 15px;
         }
-        .export-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .btn-export {
-            background-color: #2e7d32;
+        .btn-search {
+            background-color: #1976d2; /* สีน้ำเงิน */
             color: #FFF;
             border: none;
             padding: 8px 15px;
@@ -71,105 +63,84 @@
             font-family: 'Sarabun', sans-serif;
             font-size: 15px;
         }
-        .btn-export.pdf {
-            background-color: #c62828;
-        }
-        .btn-export:hover {
-            opacity: 0.9;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            border: 1px solid #BDBDBD;
-            padding: 12px;
-            text-align: left;
-            font-size: 16px;
-            vertical-align: middle;
-        }
-        th {
-            background-color: #EEEEEE;
-            font-weight: 600;
-            text-align: center;
-        }
-        .thumb-img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border: 1px solid #BDBDBD;
-            border-radius: 4px;
+        .btn-reset {
+            background-color: #757575; /* สีเทา */
+            color: #FFF;
+            border: none;
+            padding: 8px 15px;
             cursor: pointer;
-            margin-right: 4px;
+            border-radius: 4px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 15px;
         }
+        .btn-search:hover, .btn-reset:hover { opacity: 0.9; }
+
+        .header-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tabs { display: flex; gap: 10px; }
+        .tab-btn {
+            background-color: #E0E0E0; color: #333; border: none;
+            padding: 10px 20px; cursor: pointer;
+            font-family: 'Sarabun', sans-serif; font-size: 16px;
+            font-weight: 600; border-radius: 4px 4px 0 0;
+        }
+        .tab-btn.active { background-color: #333; color: #FFF; }
+        
+        .export-buttons { display: flex; gap: 10px; }
+        .btn-export {
+            background-color: #2e7d32; color: #FFF; border: none;
+            padding: 8px 15px; cursor: pointer; border-radius: 4px;
+            font-family: 'Sarabun', sans-serif; font-size: 15px;
+        }
+        .btn-export.pdf { background-color: #c62828; }
+        .btn-export:hover { opacity: 0.9; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td {
+            border: 1px solid #BDBDBD; padding: 12px;
+            text-align: left; font-size: 16px; vertical-align: middle;
+        }
+        th { background-color: #EEEEEE; font-weight: 600; text-align: center; }
+        
+        .thumb-img {
+            width: 60px; height: 60px; object-fit: cover;
+            border: 1px solid #BDBDBD; border-radius: 4px;
+            cursor: pointer; margin-right: 4px;
+        }
+        
         #imageModal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            text-align: center;
-            overflow-y: auto;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; text-align: center; overflow-y: auto;
         }
         .modal-content {
-            margin: 50px auto;
-            background: #FFF;
-            padding: 20px;
-            width: 80%;
-            max-width: 800px;
-            border-radius: 5px;
+            margin: 50px auto; background: #FFF; padding: 20px;
+            width: 80%; max-width: 800px; border-radius: 5px;
         }
-        .close-btn {
-            float: right;
-            cursor: pointer;
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-        }
-        .modal-img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #CCC;
-            margin-top: 10px;
-        }
+        .close-btn { float: right; cursor: pointer; font-size: 28px; font-weight: bold; color: #333; }
+        .modal-img { max-width: 100%; height: auto; border: 1px solid #CCC; margin-top: 10px; }
 
-        /* 🖨️ ตั้งค่าสำหรับการพิมพ์ออก PDF (ให้รูปภาพแสดงผลด้วย) */
+        /* 🖨️ ตั้งค่าสำหรับการพิมพ์ออก PDF */
         @media print {
-            body { 
-                background-color: #FFF; 
-                padding: 0; 
-            }
-            .container { 
-                border: none; 
-                box-shadow: none; 
-                padding: 0; 
-                width: 100%;
-                max-width: none;
-            }
-            .tabs, .export-buttons, .btn-view {
-                display: none !important; 
-            }
+            body { background-color: #FFF; padding: 0; }
+            .container { border: none; box-shadow: none; padding: 0; width: 100%; max-width: none; }
+            /* ซ่อนเมนูค้นหาและปุ่มต่างๆ ตอนปริ้น */
+            .filter-section, .tabs, .export-buttons, .btn-view { display: none !important; }
             .thumb-img {
-                width: 50px !important;
-                height: 50px !important;
+                width: 50px !important; height: 50px !important;
                 border: 1px solid #000 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact; print-color-adjust: exact;
             }
-            table {
-                page-break-inside: auto;
-            }
-            tr {
-                page-break-inside: avoid;
-                page-break-after: auto;
-            }
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
         }
     </style>
 </head>
@@ -178,6 +149,17 @@
 <div class="container">
     <h2>ระบบรายงานผลการปฏิบัติงาน รปภ.</h2>
     
+    <!-- 📅 ส่วนค้นหาตามช่วงวันที่ -->
+    <div class="filter-section">
+        <label>ค้นหารายงาน ตั้งแต่วันที่:</label>
+        <input type="date" id="startDate" class="date-input">
+        <label>ถึงวันที่:</label>
+        <input type="date" id="endDate" class="date-input">
+        <button class="btn-search" onclick="applyFilter()">🔍 ค้นหา</button>
+        <button class="btn-reset" onclick="resetFilter()">🔄 ล้างค่า (ดูทั้งหมด)</button>
+    </div>
+
+    <!-- แถบเมนูและปุ่ม Export -->
     <div class="header-action">
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('shift', event)">1. รายงานเข้าเวร</button>
@@ -239,8 +221,8 @@
 <!-- เรียกใช้ Firebase Web SDK -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    // 💡 นำเข้าคำสั่ง orderBy เพิ่มเติม
-    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    // 💡 เพิ่มคำสั่ง where สำหรับใช้กรองข้อมูล
+    import { getFirestore, collection, getDocs, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyB8j7NqHISDCl7srCXc3VJGWlJRHFNzD5E",
@@ -255,6 +237,43 @@
     const db = getFirestore(app);
 
     let currentActiveTab = 'shift';
+    
+    // ตัวแปรสำหรับเก็บค่าวันที่ค้นหา
+    let filterStartDate = null;
+    let filterEndDate = null;
+
+    // ฟังก์ชันรับค่าวันที่เพื่อค้นหา
+    window.applyFilter = function() {
+        const startVal = document.getElementById('startDate').value;
+        const endVal = document.getElementById('endDate').value;
+        
+        if (!startVal || !endVal) {
+            alert("กรุณาเลือกทั้ง 'ตั้งแต่วันที่' และ 'ถึงวันที่' ให้ครบถ้วนครับ");
+            return;
+        }
+
+        // แปลงข้อความเป็นข้อมูลเวลา (ตั้งเวลาเริ่มต้น 00:00:00 ถึงสิ้นสุด 23:59:59)
+        filterStartDate = new Date(startVal);
+        filterStartDate.setHours(0, 0, 0, 0);
+        
+        filterEndDate = new Date(endVal);
+        filterEndDate.setHours(23, 59, 59, 999);
+
+        // โหลดข้อมูลใหม่ตามแท็บที่เปิดอยู่
+        if (currentActiveTab === 'shift') loadShiftData();
+        else loadPatrolData();
+    }
+
+    // ฟังก์ชันล้างค่าการค้นหา (ดูทั้งหมด)
+    window.resetFilter = function() {
+        document.getElementById('startDate').value = '';
+        document.getElementById('endDate').value = '';
+        filterStartDate = null;
+        filterEndDate = null;
+        
+        if (currentActiveTab === 'shift') loadShiftData();
+        else loadPatrolData();
+    }
 
     window.switchTab = function(tabName, event) {
         currentActiveTab = tabName;
@@ -291,13 +310,24 @@
     async function loadShiftData() {
         const tableBody = document.getElementById('shiftTableBody');
         try {
-            // 💡 สั่งให้เรียงข้อมูลตาม timestamp แบบ desc (ใหม่ไปเก่า)
-            const q = query(collection(db, "shift_reports"), orderBy("timestamp", "desc"));
+            let q;
+            // ตรวจสอบว่ามีการค้นหาวันที่หรือไม่
+            if (filterStartDate && filterEndDate) {
+                q = query(
+                    collection(db, "shift_reports"),
+                    where("timestamp", ">=", filterStartDate),
+                    where("timestamp", "<=", filterEndDate),
+                    orderBy("timestamp", "desc")
+                );
+            } else {
+                q = query(collection(db, "shift_reports"), orderBy("timestamp", "desc"));
+            }
+
             const querySnapshot = await getDocs(q);
             tableBody.innerHTML = '';
 
             if (querySnapshot.empty) {
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ยังไม่มีข้อมูลรายงานเข้าเวร</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>';
                 return;
             }
 
@@ -318,7 +348,7 @@
                 tableBody.appendChild(tr);
             }
         } catch (error) {
-            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:red;">เกิดข้อผิดพลาดในการดึงข้อมูล (ตรวจสอบสิทธิ์ Index ใน Firebase)</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:red;">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>';
             console.error("Error loading shift data:", error);
         }
     }
@@ -326,13 +356,24 @@
     async function loadPatrolData() {
         const tableBody = document.getElementById('patrolTableBody');
         try {
-            // 💡 สั่งให้เรียงข้อมูลตาม timestamp แบบ desc (ใหม่ไปเก่า)
-            const q = query(collection(db, "patrol_reports"), orderBy("timestamp", "desc"));
+            let q;
+            // ตรวจสอบว่ามีการค้นหาวันที่หรือไม่
+            if (filterStartDate && filterEndDate) {
+                q = query(
+                    collection(db, "patrol_reports"),
+                    where("timestamp", ">=", filterStartDate),
+                    where("timestamp", "<=", filterEndDate),
+                    orderBy("timestamp", "desc")
+                );
+            } else {
+                q = query(collection(db, "patrol_reports"), orderBy("timestamp", "desc"));
+            }
+
             const querySnapshot = await getDocs(q);
             tableBody.innerHTML = '';
 
             if (querySnapshot.empty) {
-                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">ยังไม่มีข้อมูลรายงานเหตุการณ์</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>';
                 return;
             }
 
@@ -350,7 +391,7 @@
                 tableBody.appendChild(tr);
             }
         } catch (error) {
-            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:red;">เกิดข้อผิดพลาดในการดึงข้อมูล (ตรวจสอบสิทธิ์ Index ใน Firebase)</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:red;">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>';
             console.error("Error loading patrol data:", error);
         }
     }
