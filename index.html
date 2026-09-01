@@ -221,7 +221,6 @@
 <!-- เรียกใช้ Firebase Web SDK -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    // 💡 เพิ่มคำสั่ง where สำหรับใช้กรองข้อมูล
     import { getFirestore, collection, getDocs, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -237,12 +236,9 @@
     const db = getFirestore(app);
 
     let currentActiveTab = 'shift';
-    
-    // ตัวแปรสำหรับเก็บค่าวันที่ค้นหา
     let filterStartDate = null;
     let filterEndDate = null;
 
-    // ฟังก์ชันรับค่าวันที่เพื่อค้นหา
     window.applyFilter = function() {
         const startVal = document.getElementById('startDate').value;
         const endVal = document.getElementById('endDate').value;
@@ -252,19 +248,16 @@
             return;
         }
 
-        // แปลงข้อความเป็นข้อมูลเวลา (ตั้งเวลาเริ่มต้น 00:00:00 ถึงสิ้นสุด 23:59:59)
         filterStartDate = new Date(startVal);
         filterStartDate.setHours(0, 0, 0, 0);
         
         filterEndDate = new Date(endVal);
         filterEndDate.setHours(23, 59, 59, 999);
 
-        // โหลดข้อมูลใหม่ตามแท็บที่เปิดอยู่
         if (currentActiveTab === 'shift') loadShiftData();
         else loadPatrolData();
     }
 
-    // ฟังก์ชันล้างค่าการค้นหา (ดูทั้งหมด)
     window.resetFilter = function() {
         document.getElementById('startDate').value = '';
         document.getElementById('endDate').value = '';
@@ -293,7 +286,9 @@
     async function fetchImagesHtml(collectionName, docId) {
         try {
             const imagesRef = collection(db, collectionName, docId, "images");
-            const imageSnapshot = await getDocs(imagesRef);
+            // 💡 เรียงรูปภาพให้เป็นไปตามลำดับเวลาที่ รปภ. กดส่งเข้ามารูปแรกไปรูปสุดท้าย
+            const qImages = query(imagesRef, orderBy("timestamp", "asc"));
+            const imageSnapshot = await getDocs(qImages);
             if (imageSnapshot.empty) return '-';
 
             let html = '';
@@ -311,16 +306,16 @@
         const tableBody = document.getElementById('shiftTableBody');
         try {
             let q;
-            // ตรวจสอบว่ามีการค้นหาวันที่หรือไม่
             if (filterStartDate && filterEndDate) {
                 q = query(
                     collection(db, "shift_reports"),
                     where("timestamp", ">=", filterStartDate),
                     where("timestamp", "<=", filterEndDate),
-                    orderBy("timestamp", "desc")
+                    orderBy("timestamp", "asc") // 💡 เปลี่ยนเป็น "asc" เรียงจากเก่าไปใหม่
                 );
             } else {
-                q = query(collection(db, "shift_reports"), orderBy("timestamp", "desc"));
+                // 💡 เปลี่ยนเป็น "asc" เรียงจากเก่าไปใหม่
+                q = query(collection(db, "shift_reports"), orderBy("timestamp", "asc"));
             }
 
             const querySnapshot = await getDocs(q);
@@ -357,16 +352,16 @@
         const tableBody = document.getElementById('patrolTableBody');
         try {
             let q;
-            // ตรวจสอบว่ามีการค้นหาวันที่หรือไม่
             if (filterStartDate && filterEndDate) {
                 q = query(
                     collection(db, "patrol_reports"),
                     where("timestamp", ">=", filterStartDate),
                     where("timestamp", "<=", filterEndDate),
-                    orderBy("timestamp", "desc")
+                    orderBy("timestamp", "asc") // 💡 เปลี่ยนเป็น "asc" เรียงจากเก่าไปใหม่
                 );
             } else {
-                q = query(collection(db, "patrol_reports"), orderBy("timestamp", "desc"));
+                // 💡 เปลี่ยนเป็น "asc" เรียงจากเก่าไปใหม่
+                q = query(collection(db, "patrol_reports"), orderBy("timestamp", "asc"));
             }
 
             const querySnapshot = await getDocs(q);
