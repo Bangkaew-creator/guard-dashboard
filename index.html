@@ -46,7 +46,6 @@
             font-weight: 700;
         }
         
-        /* 🎨 ส่วนของการค้นหาวันที่ */
         .filter-section {
             background-color: #F8FAFC;
             padding: 20px;
@@ -72,59 +71,32 @@
             outline: none;
             transition: border-color 0.3s;
         }
-        .date-input:focus {
-            border-color: var(--accent-gold);
-        }
+        .date-input:focus { border-color: var(--accent-gold); }
         .btn-search, .btn-reset, .btn-export {
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 8px;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            border: none; padding: 10px 20px; cursor: pointer;
+            border-radius: 8px; font-family: 'Sarabun', sans-serif;
+            font-size: 15px; font-weight: 600; transition: all 0.3s ease;
             box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
         }
-        .btn-search {
-            background-color: var(--primary-navy);
-            color: var(--accent-gold);
-        }
-        .btn-search:hover {
-            background-color: #152C69;
-            transform: translateY(-1px);
-        }
-        .btn-reset {
-            background-color: #94A3B8;
-            color: #FFF;
-        }
+        .btn-search { background-color: var(--primary-navy); color: var(--accent-gold); }
+        .btn-search:hover { background-color: #152C69; transform: translateY(-1px); }
+        .btn-reset { background-color: #94A3B8; color: #FFF; }
         .btn-reset:hover { background-color: #64748B; }
 
         .header-action {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;
         }
         .tabs { display: flex; gap: 8px; }
         .tab-btn {
-            background-color: #E2E8F0; 
-            color: #64748B; 
-            border: none;
-            padding: 12px 24px; 
-            cursor: pointer;
-            font-family: 'Sarabun', sans-serif; 
-            font-size: 16px;
-            font-weight: 600; 
-            border-radius: 8px 8px 0 0;
+            background-color: #E2E8F0; color: #64748B; border: none;
+            padding: 12px 24px; cursor: pointer; font-family: 'Sarabun', sans-serif; 
+            font-size: 16px; font-weight: 600; border-radius: 8px 8px 0 0;
             transition: all 0.3s;
         }
         .tab-btn:hover { background-color: #CBD5E1; }
         .tab-btn.active { 
-            background-color: var(--primary-navy); 
-            color: var(--accent-gold); 
+            background-color: var(--primary-navy); color: var(--accent-gold); 
             box-shadow: inset 0 -3px 0 var(--accent-gold);
         }
         
@@ -139,39 +111,25 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         table { 
-            width: 100%; 
-            border-collapse: separate; 
-            border-spacing: 0;
-            margin-top: 10px; 
-            border-radius: 8px;
-            overflow: hidden;
+            width: 100%; border-collapse: separate; border-spacing: 0;
+            margin-top: 10px; border-radius: 8px; overflow: hidden;
             border: 1px solid var(--border-light);
         }
         th, td {
-            padding: 14px;
-            text-align: left; 
-            font-size: 16px; 
-            vertical-align: middle;
-            border-bottom: 1px solid var(--border-light);
+            padding: 14px; text-align: left; font-size: 16px; 
+            vertical-align: middle; border-bottom: 1px solid var(--border-light);
             border-right: 1px solid var(--border-light);
         }
         th:last-child, td:last-child { border-right: none; }
         tr:last-child td { border-bottom: none; }
         
-        th { 
-            background-color: var(--primary-navy); 
-            color: #FFFFFF;
-            font-weight: 600; 
-            text-align: center; 
-        }
+        th { background-color: var(--primary-navy); color: #FFFFFF; font-weight: 600; text-align: center; }
         tr:hover td { background-color: #F8FAFC; }
         
         .thumb-img {
             width: 65px; height: 65px; object-fit: cover;
-            border: 2px solid var(--border-light); 
-            border-radius: 6px;
-            cursor: pointer; margin-right: 5px;
-            transition: transform 0.2s;
+            border: 2px solid var(--border-light); border-radius: 6px;
+            cursor: pointer; margin-right: 5px; transition: transform 0.2s;
         }
         .thumb-img:hover { transform: scale(1.05); border-color: var(--accent-gold); }
         
@@ -193,15 +151,13 @@
         .close-btn:hover { color: #EF4444; }
         .modal-img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 15px; }
 
-        /* 🖨️ ตั้งค่าสำหรับการพิมพ์ออก PDF */
         @media print {
             body { background-color: #FFF; padding: 0; }
             .container { border: none; box-shadow: none; padding: 0; width: 100%; max-width: none; }
             .filter-section, .tabs, .export-buttons { display: none !important; }
             th { background-color: #EEEEEE !important; color: #333 !important; }
             .thumb-img {
-                width: 50px !important; height: 50px !important;
-                border: 1px solid #000 !important;
+                width: 50px !important; height: 50px !important; border: 1px solid #000 !important;
                 -webkit-print-color-adjust: exact; print-color-adjust: exact;
             }
             table { page-break-inside: auto; }
@@ -216,7 +172,6 @@
         <h2>ระบบรายงานผลการปฏิบัติงาน รปภ.</h2>
     </div>
     
-    <!-- 📅 ส่วนค้นหาตามช่วงวันที่ -->
     <div class="filter-section">
         <label>ค้นหารายงาน ตั้งแต่วันที่:</label>
         <input type="date" id="startDate" class="date-input">
@@ -226,7 +181,6 @@
         <button class="btn-reset" onclick="resetFilter()">🔄 ดูทั้งหมด</button>
     </div>
 
-    <!-- แถบเมนูและปุ่ม Export -->
     <div class="header-action">
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('shift', event)">1. รายงานเข้าเวร</button>
@@ -238,7 +192,6 @@
         </div>
     </div>
 
-    <!-- แท็บที่ 1: รายงานเข้าเวร -->
     <div id="shiftTab" class="tab-content active">
         <table id="shiftTable">
             <thead>
@@ -256,7 +209,6 @@
         </table>
     </div>
 
-    <!-- แท็บที่ 2: รายงานเหตุการณ์ -->
     <div id="patrolTab" class="tab-content">
         <table id="patrolTable">
             <thead>
@@ -274,7 +226,6 @@
     </div>
 </div>
 
-<!-- หน้าต่าง Modal สำหรับขยายดูรูปภาพ -->
 <div id="imageModal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -283,7 +234,6 @@
     </div>
 </div>
 
-<!-- เรียกใช้ Firebase Web SDK -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
@@ -304,33 +254,48 @@
     let filterStartDate = null;
     let filterEndDate = null;
 
+    // 💡 ฟังก์ชันกู้คืนชื่อ รปภ. จากข้อความดั้งเดิม (raw_text) สำหรับเข้าเวร
+    function rescueShiftGuards(rawText) {
+        if (!rawText) return [];
+        const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        let guards = [];
+        lines.forEach(line => {
+            if (!line.includes('มีเจ้าหน้าที่') && (/^[1-9]\./.test(line) || line.includes('พลฯ') || line.includes('นาย') || line.includes('นาง') || line.includes('น.ส.'))) {
+                guards.push(line.replace(/^[1-9]\.\s*/, '').trim());
+            }
+        });
+        return guards;
+    }
+
+    // 💡 ฟังก์ชันกู้คืนชื่อ รปภ. จากข้อความดั้งเดิม (raw_text) สำหรับเหตุการณ์
+    function rescuePatrolGuards(rawText) {
+        if (!rawText) return null;
+        const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        let guardList = [];
+        lines.forEach(line => {
+            if (!line.includes('มีเจ้าหน้าที่') && (/^[1-9]\./.test(line) || line.includes('พลฯ') || line.includes('นาย') || line.includes('นาง') || line.includes('น.ส.'))) {
+                guardList.push(line.replace(/^[1-9]\.\s*/, '').trim());
+            }
+        });
+        return guardList.length > 0 ? guardList.join(', ') : null;
+    }
+
     window.applyFilter = function() {
         const startVal = document.getElementById('startDate').value;
         const endVal = document.getElementById('endDate').value;
-        
         if (!startVal || !endVal) {
             alert("กรุณาเลือกทั้ง 'ตั้งแต่วันที่' และ 'ถึงวันที่' ให้ครบถ้วนครับ");
             return;
         }
-
-        filterStartDate = new Date(startVal);
-        filterStartDate.setHours(0, 0, 0, 0);
-        
-        filterEndDate = new Date(endVal);
-        filterEndDate.setHours(23, 59, 59, 999);
-
-        if (currentActiveTab === 'shift') loadShiftData();
-        else loadPatrolData();
+        filterStartDate = new Date(startVal); filterStartDate.setHours(0, 0, 0, 0);
+        filterEndDate = new Date(endVal); filterEndDate.setHours(23, 59, 59, 999);
+        if (currentActiveTab === 'shift') loadShiftData(); else loadPatrolData();
     }
 
     window.resetFilter = function() {
-        document.getElementById('startDate').value = '';
-        document.getElementById('endDate').value = '';
-        filterStartDate = null;
-        filterEndDate = null;
-        
-        if (currentActiveTab === 'shift') loadShiftData();
-        else loadPatrolData();
+        document.getElementById('startDate').value = ''; document.getElementById('endDate').value = '';
+        filterStartDate = null; filterEndDate = null;
+        if (currentActiveTab === 'shift') loadShiftData(); else loadPatrolData();
     }
 
     window.switchTab = function(tabName, event) {
@@ -338,13 +303,8 @@
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
         
-        if (tabName === 'shift') {
-            document.getElementById('shiftTab').classList.add('active');
-            loadShiftData();
-        } else {
-            document.getElementById('patrolTab').classList.add('active');
-            loadPatrolData();
-        }
+        if (tabName === 'shift') { document.getElementById('shiftTab').classList.add('active'); loadShiftData(); } 
+        else { document.getElementById('patrolTab').classList.add('active'); loadPatrolData(); }
         event.currentTarget.classList.add('active');
     }
 
@@ -361,9 +321,7 @@
                 html += `<img src="${imgData.image_data}" class="thumb-img" onclick="openModal('${imgData.image_data}')" title="คลิกเพื่อขยายรูป">`;
             });
             return html;
-        } catch (error) {
-            return 'โหลดรูปไม่สำเร็จ';
-        }
+        } catch (error) { return 'โหลดรูปไม่สำเร็จ'; }
     }
 
     async function loadShiftData() {
@@ -371,29 +329,25 @@
         try {
             let q;
             if (filterStartDate && filterEndDate) {
-                q = query(
-                    collection(db, "shift_reports"),
-                    where("timestamp", ">=", filterStartDate),
-                    where("timestamp", "<=", filterEndDate),
-                    orderBy("timestamp", "asc")
-                );
-            } else {
-                q = query(collection(db, "shift_reports"), orderBy("timestamp", "asc"));
-            }
+                q = query(collection(db, "shift_reports"), where("timestamp", ">=", filterStartDate), where("timestamp", "<=", filterEndDate), orderBy("timestamp", "asc"));
+            } else { q = query(collection(db, "shift_reports"), orderBy("timestamp", "asc")); }
 
             const querySnapshot = await getDocs(q);
             tableBody.innerHTML = '';
 
             if (querySnapshot.empty) {
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 20px;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>';
-                return;
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 20px;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>'; return;
             }
 
             for (const docSnap of querySnapshot.docs) {
                 const data = docSnap.data();
                 const tr = document.createElement('tr');
-                const guard1 = data.guards && data.guards[0] ? data.guards[0] : '-';
-                const guard2 = data.guards && data.guards[1] ? data.guards[1] : '-';
+                
+                // 💡 กู้คืนชื่อจาก raw_text ถ้ากู้ได้ให้ใช้ชื่อที่กู้มา ถ้าไม่ได้ให้ใช้ข้อมูลเดิม
+                const fixedGuards = rescueShiftGuards(data.raw_text);
+                const guard1 = fixedGuards[0] ? fixedGuards[0] : (data.guards && data.guards[0] ? data.guards[0] : '-');
+                const guard2 = fixedGuards[1] ? fixedGuards[1] : (data.guards && data.guards[1] ? data.guards[1] : '-');
+                
                 const imagesHtml = await fetchImagesHtml('shift_reports', docSnap.id);
 
                 tr.innerHTML = `
@@ -416,32 +370,29 @@
         try {
             let q;
             if (filterStartDate && filterEndDate) {
-                q = query(
-                    collection(db, "patrol_reports"),
-                    where("timestamp", ">=", filterStartDate),
-                    where("timestamp", "<=", filterEndDate),
-                    orderBy("timestamp", "asc")
-                );
-            } else {
-                q = query(collection(db, "patrol_reports"), orderBy("timestamp", "asc"));
-            }
+                q = query(collection(db, "patrol_reports"), where("timestamp", ">=", filterStartDate), where("timestamp", "<=", filterEndDate), orderBy("timestamp", "asc"));
+            } else { q = query(collection(db, "patrol_reports"), orderBy("timestamp", "asc")); }
 
             const querySnapshot = await getDocs(q);
             tableBody.innerHTML = '';
 
             if (querySnapshot.empty) {
-                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>';
-                return;
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>'; return;
             }
 
             for (const docSnap of querySnapshot.docs) {
                 const data = docSnap.data();
                 const tr = document.createElement('tr');
+                
+                // 💡 กู้คืนชื่อจาก raw_text
+                const fixedGuardName = rescuePatrolGuards(data.raw_text);
+                const displayGuardName = fixedGuardName ? fixedGuardName : (data.guardName || '-');
+
                 const imagesHtml = await fetchImagesHtml('patrol_reports', docSnap.id);
 
                 tr.innerHTML = `
                     <td style="text-align:center;">${data.time || '-'}</td>
-                    <td>${data.guardName || '-'}</td>
+                    <td>${displayGuardName}</td>
                     <td><pre style="font-family:'Sarabun'; margin:0; white-space:pre-wrap;">${data.raw_text || '-'}</pre></td>
                     <td style="text-align:center;">${imagesHtml}</td>
                 `;
@@ -461,23 +412,18 @@
     window.exportToExcel = function() {
         let tableId = currentActiveTab === 'shift' ? 'shiftTable' : 'patrolTable';
         let fileName = currentActiveTab === 'shift' ? 'รายงานเข้าเวร รปภ.xlsx' : 'รายงานเหตุการณ์ รปภ.xlsx';
-        
         let table = document.getElementById(tableId);
         let wb = XLSX.utils.table_to_book(table, { raw: true });
         XLSX.writeFile(wb, fileName);
     }
 
-    window.exportToPDF = function() {
-        window.print();
-    }
+    window.exportToPDF = function() { window.print(); }
 
     loadShiftData();
 </script>
 
 <script>
-    function closeModal() {
-        document.getElementById('imageModal').style.display = 'none';
-    }
+    function closeModal() { document.getElementById('imageModal').style.display = 'none'; }
 </script>
 
 </body>
