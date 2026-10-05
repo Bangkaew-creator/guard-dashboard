@@ -10,8 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
-            --primary-navy: #1E3A8A; /* สีกรมท่า */
-            --accent-gold: #D4AF37;  /* สีทอง */
+            --primary-navy: #1E3A8A; 
+            --accent-gold: #D4AF37;  
             --bg-color: #F3F4F6;
             --card-bg: #FFFFFF;
             --text-main: #334155;
@@ -192,19 +192,19 @@
         </div>
     </div>
 
+    <!-- 💡 ปรับปรุงแท็บที่ 1: รายงานเข้าเวร (แสดงข้อความดิบ) -->
     <div id="shiftTab" class="tab-content active">
         <table id="shiftTable">
             <thead>
                 <tr>
-                    <th width="15%">วันที่รายงาน</th>
+                    <th width="20%">วันที่รายงาน</th>
                     <th width="15%">ผลัดที่ปฏิบัติ</th>
-                    <th width="25%">ชื่อ รปภ. 1</th>
-                    <th width="25%">ชื่อ รปภ. 2</th>
+                    <th width="45%">ข้อความรายงาน</th>
                     <th width="20%">รูปภาพประกอบ</th>
                 </tr>
             </thead>
             <tbody id="shiftTableBody">
-                <tr><td colspan="5" style="text-align:center; padding: 30px;">กำลังโหลดข้อมูล...</td></tr>
+                <tr><td colspan="4" style="text-align:center; padding: 30px;">กำลังโหลดข้อมูล...</td></tr>
             </tbody>
         </table>
     </div>
@@ -253,32 +253,6 @@
     let currentActiveTab = 'shift';
     let filterStartDate = null;
     let filterEndDate = null;
-
-    // 💡 ฟังก์ชันกู้คืนชื่อ รปภ. จากข้อความดั้งเดิม (raw_text) สำหรับเข้าเวร
-    function rescueShiftGuards(rawText) {
-        if (!rawText) return [];
-        const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-        let guards = [];
-        lines.forEach(line => {
-            if (!line.includes('มีเจ้าหน้าที่') && (/^[1-9]\./.test(line) || line.includes('พลฯ') || line.includes('นาย') || line.includes('นาง') || line.includes('น.ส.'))) {
-                guards.push(line.replace(/^[1-9]\.\s*/, '').trim());
-            }
-        });
-        return guards;
-    }
-
-    // 💡 ฟังก์ชันกู้คืนชื่อ รปภ. จากข้อความดั้งเดิม (raw_text) สำหรับเหตุการณ์
-    function rescuePatrolGuards(rawText) {
-        if (!rawText) return null;
-        const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-        let guardList = [];
-        lines.forEach(line => {
-            if (!line.includes('มีเจ้าหน้าที่') && (/^[1-9]\./.test(line) || line.includes('พลฯ') || line.includes('นาย') || line.includes('นาง') || line.includes('น.ส.'))) {
-                guardList.push(line.replace(/^[1-9]\.\s*/, '').trim());
-            }
-        });
-        return guardList.length > 0 ? guardList.join(', ') : null;
-    }
 
     window.applyFilter = function() {
         const startVal = document.getElementById('startDate').value;
@@ -336,31 +310,25 @@
             tableBody.innerHTML = '';
 
             if (querySnapshot.empty) {
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 20px;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>'; return;
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">ไม่พบข้อมูลในช่วงเวลาที่เลือก</td></tr>'; return;
             }
 
             for (const docSnap of querySnapshot.docs) {
                 const data = docSnap.data();
                 const tr = document.createElement('tr');
-                
-                // 💡 กู้คืนชื่อจาก raw_text ถ้ากู้ได้ให้ใช้ชื่อที่กู้มา ถ้าไม่ได้ให้ใช้ข้อมูลเดิม
-                const fixedGuards = rescueShiftGuards(data.raw_text);
-                const guard1 = fixedGuards[0] ? fixedGuards[0] : (data.guards && data.guards[0] ? data.guards[0] : '-');
-                const guard2 = fixedGuards[1] ? fixedGuards[1] : (data.guards && data.guards[1] ? data.guards[1] : '-');
-                
                 const imagesHtml = await fetchImagesHtml('shift_reports', docSnap.id);
 
+                // 💡 แสดงข้อความดิบ (raw_text) ทั้งหมดในช่องเดียว
                 tr.innerHTML = `
                     <td style="text-align:center;">${data.date || '-'}</td>
                     <td style="text-align:center;">${data.shift || '-'}</td>
-                    <td>${guard1}</td>
-                    <td>${guard2}</td>
+                    <td><pre style="font-family:'Sarabun'; margin:0; white-space:pre-wrap; font-size: 15px;">${data.raw_text || '-'}</pre></td>
                     <td style="text-align:center;">${imagesHtml}</td>
                 `;
                 tableBody.appendChild(tr);
             }
         } catch (error) {
-            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:red; padding: 20px;">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:red; padding: 20px;">เกิดข้อผิดพลาดในการดึงข้อมูล</td></tr>';
             console.error("Error loading shift data:", error);
         }
     }
@@ -383,17 +351,12 @@
             for (const docSnap of querySnapshot.docs) {
                 const data = docSnap.data();
                 const tr = document.createElement('tr');
-                
-                // 💡 กู้คืนชื่อจาก raw_text
-                const fixedGuardName = rescuePatrolGuards(data.raw_text);
-                const displayGuardName = fixedGuardName ? fixedGuardName : (data.guardName || '-');
-
                 const imagesHtml = await fetchImagesHtml('patrol_reports', docSnap.id);
 
                 tr.innerHTML = `
                     <td style="text-align:center;">${data.time || '-'}</td>
-                    <td>${displayGuardName}</td>
-                    <td><pre style="font-family:'Sarabun'; margin:0; white-space:pre-wrap;">${data.raw_text || '-'}</pre></td>
+                    <td>${data.guardName || '-'}</td>
+                    <td><pre style="font-family:'Sarabun'; margin:0; white-space:pre-wrap; font-size: 15px;">${data.raw_text || '-'}</pre></td>
                     <td style="text-align:center;">${imagesHtml}</td>
                 `;
                 tableBody.appendChild(tr);
